@@ -26,4 +26,9 @@ abstract class FlutterAirpodsPlatform extends PlatformInterface {
   Future<String?> getPlatformVersion() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
+
+  Future<String?> getAirPodsConnectionUpdates() {
+    throw UnimplementedError(
+        'getAirPodsConnectionUpdates() has not been implemented.');
+  }
 }

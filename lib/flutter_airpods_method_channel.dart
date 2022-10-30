@@ -11,7 +11,15 @@ class MethodChannelFlutterAirpods extends FlutterAirpodsPlatform {
 
   @override
   Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
+    final version =
+        await methodChannel.invokeMethod<String>('getPlatformVersion');
+    return version;
+  }
+
+  @override
+  Future<String?> getAirPodsConnectionUpdates() async {
+    final version =
+        await methodChannel.invokeMethod<String>('getAirPodsConnectionUpdates');
     return version;
   }
 }
