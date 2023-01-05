@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_airpods/flutter_airpods.dart';
+import 'package:flutter_airpods/models/device_motion_data.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,13 +32,14 @@ class _MyAppState extends State<MyApp> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Center(
-              child: StreamBuilder<int>(
-                stream: FlutterAirpods.getRandomNumberStream,
-                builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+              child: StreamBuilder<DeviceMotionData>(
+                stream: FlutterAirpods.getAirPodsDeviceMotionUpdates,
+                builder: (BuildContext context,
+                    AsyncSnapshot<DeviceMotionData> snapshot) {
                   if (snapshot.hasData) {
-                    return Text("Current Random Number: ${snapshot.data}");
+                    return Text("${snapshot.data?.toJson()}");
                   } else {
-                    return const Text("Waiting for new random number...");
+                    return const Text("Waiting for incoming data...");
                   }
                 },
               ),
