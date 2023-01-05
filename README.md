@@ -42,8 +42,6 @@ To use this plugin, add `flutter_airpods` as a [dependency in your pubspec.yaml 
 
 Here is a example of how to use this package:
 
-#### Write data
-
 ```dart
 @override
   Widget build(BuildContext context) {
