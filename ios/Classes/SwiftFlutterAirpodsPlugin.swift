@@ -39,46 +39,46 @@ class SwiftStreamHandler: NSObject, FlutterStreamHandler, CMHeadphoneMotionManag
     var sink: FlutterEventSink?
     var timer: Timer?
     let airpods = CMHeadphoneMotionManager()
-    var infos: String
-    var isAvailable: Bool
-    var errorMessage: String
-    
+
     override init() {
-        infos = ""
-        errorMessage = ""
-        isAvailable = false
         super.init()
         airpods.delegate = self
-        
+        print("INIT FUNCTION")
         guard airpods.isDeviceMotionAvailable else {
-            errorMessage = "Sorry, Your device is not supported."
             return
         }
-        
-        airpods.startDeviceMotionUpdates(to: OperationQueue.current!, withHandler: {[weak self] motion, error  in
-            guard let motion = motion, error == nil else { return }
-            print(motion)
-            self?.isAvailable = true
-            self?.setInfos(motion)
-        })
     }
       
       func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
+          print("ON LISTEN CALLED")
           sink = events
           timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(sendNewRandomNumber), userInfo: nil, repeats: true)
+          airpods.startDeviceMotionUpdates()
           return nil
       }
       
       @objc func sendNewRandomNumber() {
           guard let sink = sink else { return }
+          if (airpods.deviceMotion?.attitude.quaternion.x == nil) {
+              print("RANDOMNumber")
+              let randomNumber = Int.random(in: 1..<10)
+              sink(randomNumber)
+          } else {
+              print("DEVICEMOTION")
+              printData(airpods.deviceMotion!)
+              sink(Int((airpods.deviceMotion?.attitude.quaternion.x)!))
+          }
           
-          let randomNumber = Int.random(in: 1..<10)
-          sink(randomNumber)
+      }
+      
+      func onCancel(withArguments arguments: Any?) -> FlutterError? {
+          sink = nil
+          airpods.stopDeviceMotionUpdates()
+          return nil
       }
     
-    
-    func setInfos(_ data: CMDeviceMotion) {
-        infos = """
+    func printData(_ data: CMDeviceMotion) {
+        print("""
                Quaternion:
                    x: \(data.attitude.quaternion.x)
                    y: \(data.attitude.quaternion.y)
@@ -105,14 +105,8 @@ class SwiftStreamHandler: NSObject, FlutterStreamHandler, CMHeadphoneMotionManag
                    accuracy: \(data.magneticField.accuracy)
                Heading:
                    \(data.heading)
-               """
+               """)
     }
-      
-      func onCancel(withArguments arguments: Any?) -> FlutterError? {
-          sink = nil
-          airpods.stopDeviceMotionUpdates()
-          return nil
-      }
 }
 
 @available(iOS 14.0, *)
