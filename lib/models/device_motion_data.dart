@@ -8,6 +8,7 @@ import 'package:flutter_airpods/models/user_acceleration.dart';
 
 import 'calibrated_magnetic_field_accuracy.dart';
 
+/// An object that contains all information about the airpods data.
 class DeviceMotionData {
   final Attitude attitude;
   final Gravity gravity;

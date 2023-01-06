@@ -1,3 +1,4 @@
+/// A quaternion representing the device's attitude
 class Quaternion {
   final num x;
   final num y;

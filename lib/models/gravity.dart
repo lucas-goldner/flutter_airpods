@@ -1,3 +1,6 @@
+/// An object that represents the gravity vector expressed in the device's reference frame.
+/// Note that the total acceleration of the device is equal to gravity plus
+/// userAcceleration.
 class Gravity {
   final num x;
   final num y;

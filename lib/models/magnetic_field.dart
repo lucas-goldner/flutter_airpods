@@ -1,3 +1,4 @@
+/// A structure containing 3-axis magnetometer data.
 class MagneticField {
   final num x;
   final num y;
