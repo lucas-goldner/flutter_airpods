@@ -6,6 +6,7 @@ mixin MagneticFieldCalibrationAccuracyMixin {
 /// accuracy of a magnetic field estimate.
 enum MagneticFieldCalibrationAccuracy
     with MagneticFieldCalibrationAccuracyMixin {
+  /// Rawvalues are defined as in [CMMagneticFieldCalibrationAccuracy]
   uncalibrated(-1),
   low(0),
   medium(1),

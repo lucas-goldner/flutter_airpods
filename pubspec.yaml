@@ -1,6 +1,6 @@
 name: flutter_airpods
 description: A Library for accessing AirPods data via CMHeadphoneMotionManager. Simplifies retrieval of information about currently connected AirPods.
-version: 1.0.2
+version: 1.0.3
 repository: https://github.com/lucas-goldner/flutter_airpods
 issue_tracker: https://github.com/lucas-goldner/flutter_airpods/issues
 

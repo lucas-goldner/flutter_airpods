@@ -6,7 +6,10 @@ import 'calibrated_magnetic_field_accuracy.dart';
 /// Note that this is the total magnetic field in the device's vicinity without device
 /// bias (Earth's magnetic field plus surrounding fields, without device bias).
 class CalibratedMagneticField {
+  /// The 3-axis calibrated magnetic field vector.
   final MagneticField field;
+
+  /// An estimate of the calibration accuracy.
   final MagneticFieldCalibrationAccuracy accuracy;
 
   CalibratedMagneticField(this.field, this.accuracy);

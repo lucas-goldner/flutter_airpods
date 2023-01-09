@@ -38,6 +38,17 @@ Below is the complete JSON data that you can expect:
 }
 ```
 
+## Before you start!\
+
+1. Set the iOS Version of your project to at least `iOS 14`.
+
+2. Inside of the `ios/Runner/Info.plist` you need to add `NSMotionUsageDescription` with a reason on why you want to use it:
+
+```
+<key>NSMotionUsageDescription</key>
+<string>Get AirPods movement</string>
+```
+
 ## Usage
 
 To use this plugin, add `flutter_airpods` as a [dependency in your pubspec.yaml file](https://flutter.dev/docs/development/platform-integration/platform-channels).

@@ -2,6 +2,7 @@
 /// Note that the total acceleration of the device is equal to gravity plus
 /// userAcceleration.
 class Gravity {
+  /// x,y and z coordinates
   final num x;
   final num y;
   final num z;

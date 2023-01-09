@@ -26,6 +26,7 @@ class DeviceMotionData {
     this.heading,
   );
 
+  /// Creates a new DeviceMotionData from a JSON
   factory DeviceMotionData.fromJson(Map<String, dynamic> json) {
     MagneticFieldCalibrationAccuracy accuracy =
         MagneticFieldCalibrationAccuracy.uncalibrated;
@@ -59,6 +60,7 @@ class DeviceMotionData {
     );
   }
 
+  /// Creates a JSON from an existing DeviceMotionData
   Map<String, dynamic> toJson() => {
         "quaternionX": attitude.quaternion.x,
         "quaternionY": attitude.quaternion.y,

@@ -10,11 +10,16 @@ class FlutterAirpods {
 
   /// The getAirPodsDeviceMotionUpdates method allows to receive updates on the motion data of the currently connected airpods.
   static Stream<DeviceMotionData> get getAirPodsDeviceMotionUpdates {
+    /// The data gets sent over the event channel.
+    /// Every incoming event gets read as a JSON and then
+    /// is mapped as [DeviceMotionData].
     return _motionChannel.receiveBroadcastStream().map((event) {
       Map<String, dynamic> json = jsonDecode(event);
 
+      /// Creates a [DeviceMotionData] from a JSON.
       DeviceMotionData deviceMotionData = DeviceMotionData.fromJson(json);
 
+      /// Returns transformed [DeviceMotionData]
       return deviceMotionData;
     });
   }
