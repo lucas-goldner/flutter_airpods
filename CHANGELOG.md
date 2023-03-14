@@ -1,3 +1,7 @@
+## 1.0.4
+
+- feat: Extend models with equatable
+
 ## 1.0.3
 
 - doc: Add setup instructions
