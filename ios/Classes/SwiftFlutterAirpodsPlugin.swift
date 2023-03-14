@@ -61,17 +61,11 @@ public class SwiftFlutterAirpodsPlugin: NSObject, FlutterPlugin {
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
-        case "getPlatformVersion":
-            result(returnSystemVersion())
         case "getAirPodsConnectionUpdates":
             result(returnAirPodsConnectionUpdates())
         default:
             result("")
         }
-    }
-    
-    public func returnSystemVersion() -> String {
-        return "iOS " + UIDevice.current.systemVersion
     }
     
     public func returnAirPodsConnectionUpdates() -> String {
@@ -84,7 +78,6 @@ public class SwiftFlutterAirpodsPlugin: NSObject, FlutterPlugin {
 }
 
 class SwiftStreamHandler: NSObject, FlutterStreamHandler, CMHeadphoneMotionManagerDelegate {
-    var sink: FlutterEventSink?
     var timer: Timer?
     let airpods = CMHeadphoneMotionManager()
 
@@ -97,7 +90,6 @@ class SwiftStreamHandler: NSObject, FlutterStreamHandler, CMHeadphoneMotionManag
     }
       
       func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
-          sink = events
           airpods.startDeviceMotionUpdates(to: OperationQueue.current!, withHandler: {motion, error  in
               guard let motion = motion, error == nil else { return }
               let encoder = JSONEncoder()
@@ -113,7 +105,6 @@ class SwiftStreamHandler: NSObject, FlutterStreamHandler, CMHeadphoneMotionManag
       }
       
       func onCancel(withArguments arguments: Any?) -> FlutterError? {
-          sink = nil
           airpods.stopDeviceMotionUpdates()
           return nil
       }

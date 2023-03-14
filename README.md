@@ -38,7 +38,7 @@ Below is the complete JSON data that you can expect:
 }
 ```
 
-## Before you start!\
+## Before you start!
 
 1. Set the iOS Version of your project to at least `iOS 14`.
 

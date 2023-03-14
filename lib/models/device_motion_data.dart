@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_airpods/models/attitude.dart';
 import 'package:flutter_airpods/models/calibrated_magnetic_field.dart';
 import 'package:flutter_airpods/models/gravity.dart';
@@ -9,7 +10,7 @@ import 'package:flutter_airpods/models/user_acceleration.dart';
 import 'calibrated_magnetic_field_accuracy.dart';
 
 /// An object that contains all information about the airpods data.
-class DeviceMotionData {
+class DeviceMotionData extends Equatable {
   final Attitude attitude;
   final Gravity gravity;
   final RotationRate rotationRate;
@@ -17,7 +18,7 @@ class DeviceMotionData {
   final CalibratedMagneticField calibratedMagneticField;
   final num heading;
 
-  DeviceMotionData(
+  const DeviceMotionData(
     this.attitude,
     this.gravity,
     this.rotationRate,
@@ -84,4 +85,15 @@ class DeviceMotionData {
         'magneticFieldAccuracy': calibratedMagneticField.accuracy.value,
         'heading': heading,
       };
+
+  /// Used for comparison of device motion data objects.
+  @override
+  List<Object?> get props => [
+        attitude,
+        gravity,
+        rotationRate,
+        userAcceleration,
+        calibratedMagneticField,
+        heading
+      ];
 }
