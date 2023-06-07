@@ -24,7 +24,7 @@ struct DeviceMotionDataCodable: Codable {
     let magneticFieldZ: Double
     let magneticFieldAccuracy: Int32
     let heading: Double
-
+    
     init(deviceMotion: CMDeviceMotion) {
         quaternionX = deviceMotion.attitude.quaternion.x
         quaternionY = deviceMotion.attitude.quaternion.y
@@ -52,35 +52,14 @@ struct DeviceMotionDataCodable: Codable {
 
 public class SwiftFlutterAirpodsPlugin: NSObject, FlutterPlugin {
     public static func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(name: "flutter_airpods", binaryMessenger: registrar.messenger())
         let eventChannel = FlutterEventChannel(name: "flutter_airpods.motion", binaryMessenger: registrar.messenger())
-        eventChannel.setStreamHandler(SwiftStreamHandler())
-        let instance = SwiftFlutterAirpodsPlugin()
-        registrar.addMethodCallDelegate(instance, channel: channel)
-    }
-    
-    public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        switch call.method {
-        case "getAirPodsConnectionUpdates":
-            result(returnAirPodsConnectionUpdates())
-        default:
-            result("")
-        }
-    }
-    
-    public func returnAirPodsConnectionUpdates() -> String {
-        if #available(iOS 14.0, *) {
-            return "listenForAirPodsUpdates()"
-        }
-        
-        return "Works only starting with iOS 14.0"
+        eventChannel.setStreamHandler(AirPodsStreamHandler())
     }
 }
 
-class SwiftStreamHandler: NSObject, FlutterStreamHandler, CMHeadphoneMotionManagerDelegate {
-    var timer: Timer?
+class AirPodsStreamHandler: NSObject, FlutterStreamHandler, CMHeadphoneMotionManagerDelegate {
     let airpods = CMHeadphoneMotionManager()
-
+    
     override init() {
         super.init()
         airpods.delegate = self
@@ -88,24 +67,29 @@ class SwiftStreamHandler: NSObject, FlutterStreamHandler, CMHeadphoneMotionManag
             return
         }
     }
-      
-      func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
-          airpods.startDeviceMotionUpdates(to: OperationQueue.current!, withHandler: {motion, error  in
-              guard let motion = motion, error == nil else { return }
-              let encoder = JSONEncoder()
-              let deviceMotionData = DeviceMotionDataCodable(deviceMotion: motion)
-              if let jsonData = try? encoder.encode(deviceMotionData) {
-                  if let jsonString = String(data: jsonData, encoding: .utf8) {
-                      events(jsonString)
-                  }
-              }
-          })
-          
-          return nil
-      }
-      
-      func onCancel(withArguments arguments: Any?) -> FlutterError? {
-          airpods.stopDeviceMotionUpdates()
-          return nil
-      }
+    
+    func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
+        airpods.startDeviceMotionUpdates(to: OperationQueue.current!) { motion, error in
+            guard let motion = motion, error == nil else {
+                return
+            }
+            
+            let encoder = JSONEncoder()
+            let deviceMotionData = DeviceMotionDataCodable(deviceMotion: motion)
+            
+            guard let jsonData = try? encoder.encode(deviceMotionData),
+                  let jsonString = String(data: jsonData, encoding: .utf8) else {
+                return
+            }
+            
+            events(jsonString)
+        }
+        
+        return nil
+    }
+    
+    func onCancel(withArguments arguments: Any?) -> FlutterError? {
+        airpods.stopDeviceMotionUpdates()
+        return nil
+    }
 }

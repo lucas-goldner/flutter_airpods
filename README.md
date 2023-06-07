@@ -14,27 +14,45 @@ Below is the complete JSON data that you can expect:
 
 ```
 {
+    // The attitude of the device.
+
+    // Returns a quaternion representing the device's attitude.
+
     quaternionY: 0.21538676246259386,
     quaternionX: -0.47675120121765957,
     quaternionW: 0.8522420297864675,
     quaternionZ: -0.0005364311021727928
-    pitch: -0.9490214392332175,
-    roll: 0.6807802035216475,
-    yaw: 0.3586524456166643,
-    gravityX: 0.3666117787361145,
-    gravityY: 0.8128458857536316,
-    gravityZ: -0.45263373851776123,
-    accelerationX: 0.005457472056150436,
-    accelerationY: 0.01201944425702095,
-    accelerationZ: -0.005634056404232979,
-    rotationRateX: -0.0419556125998497,
-    rotationRateY: -0.01837937720119953,
-    rotationRateZ: 0.011555187404155731,
-    magneticFieldAccuracy: -1,
-    magneticFieldX: 0,
-    magneticFieldY: 0,
-    magneticFieldZ: 0,
-    heading: 0
+
+    pitch: -0.9490214392332175,           // The pitch of the device, in radians.
+    roll: 0.6807802035216475,             // The roll of the device, in radians.
+    yaw: 0.3586524456166643,              // The yaw of the device, in radians.
+
+    // The gravity acceleration vector expressed in the device's reference frame.
+
+    gravityX: 0.3666117787361145,         // Gravity vector along the x-axis in G's
+    gravityY: 0.8128458857536316,         // Gravity vector along the y-axis in G's
+    gravityZ: -0.45263373851776123,       // Gravity vector along the z-axis in G's
+
+    // The acceleration that the user is giving to the device.
+
+    accelerationX: 0.005457472056150436,  // Acceleration along the x-axis in G's
+    accelerationY: 0.01201944425702095,   // Acceleration along the y-axis in G's
+    accelerationZ: -0.005634056404232979, // Acceleration along the z-axis in G's
+
+    // The rotation rate of the device.
+
+    rotationRateX: -0.0419556125998497,   // Rotation rate around the x-axis in radians per second
+    rotationRateY: -0.01837937720119953,  // Rotation rate around the y-axis in radians per second
+    rotationRateZ: 0.011555187404155731,  // Rotation rate around the z-axis in radians per second
+
+    // Returns the magnetic field vector with respect to the device.
+
+    magneticFieldAccuracy: -1,            // Indicates the calibration accuracy of a magnetic field estimate
+    magneticFieldX: 0,                    // Magnetic field vector along the x-axis in microteslas
+    magneticFieldY: 0,                    // Magnetic field vector along the y-axis in microteslas
+    magneticFieldZ: 0,                    // Magnetic field vector along the z-axis in microteslas
+    heading: 0                            // This property contains a value in the range of 0.0 to 360.0 degrees.
+                                          // A heading of 0.0 indicates that the attitude of the device matches the current reference frame.
 }
 ```
 

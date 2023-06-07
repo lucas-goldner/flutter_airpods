@@ -1,3 +1,8 @@
+## 1.0.5
+
+- doc: Explains the received data more in detail
+- feat: Updated code quality
+
 ## 1.0.4
 
 - feat: Extend models with equatable
